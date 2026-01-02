@@ -20,7 +20,18 @@ jobs:
         with:
           channel: 'stable'
 
+      # حذف الملفات القديمة عشان flutter create يشتغل
+      - run: rm -rf *
+
+      # إنشاء مشروع Flutter جديد كامل
       - run: flutter create .
+
+      # نسخ الكود المخصص بتاعنا (lib فقط، عشان الباقي هيبوظ لو نسخناه)
+      - run: |
+          rm -rf lib
+          git clone --depth 1 https://github.com/USERNAME/REPO.git temp_repo
+          cp -r temp_repo/lib .
+          rm -rf temp_repo
 
       - run: flutter pub get
 
